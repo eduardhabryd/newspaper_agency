@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Permission, Group
 from django.db import models
 
 
@@ -8,6 +8,20 @@ class Redactor(AbstractUser):
 	class Meta:
 		verbose_name = 'redactor'
 		verbose_name_plural = 'redactors'
+	
+	# Specify related names to resolve clashes
+	groups = models.ManyToManyField(
+		Group,
+		verbose_name=('groups',),
+		blank=True,
+		related_name='redactors'
+	)
+	user_permissions = models.ManyToManyField(
+		Permission,
+		verbose_name=('user permissions',),
+		blank=True,
+		related_name='redactors'
+	)
 
 
 class Topic(models.Model):
@@ -20,8 +34,8 @@ class Topic(models.Model):
 		verbose_name = 'topic'
 		verbose_name_plural = 'topics'
 		ordering = ['name']
-		
-		
+
+
 class Newspaper(models.Model):
 	title = models.CharField(max_length=255)
 	content = models.TextField()
@@ -35,4 +49,4 @@ class Newspaper(models.Model):
 	class Meta:
 		verbose_name = 'newspaper'
 		verbose_name_plural = 'newspapers'
-		ordering = ['name']
+		ordering = ['title']
