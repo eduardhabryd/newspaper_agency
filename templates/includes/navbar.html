@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand ms-4 me-5"
+       href="{% url 'agency:index' %}">The Newsletter Nexus</a>
+    <div class="collapse navbar-collapse"
+         id="navbarScroll">
+      <ul class="navbar-nav me-auto mx-auto my-2 my-lg-0 navbar-nav-scroll"
+          style="--bs-scroll-height: 100px;">
+        <li class="nav-item ms-5">
+          <a class="nav-link active"
+             aria-current="page"
+             href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active"
+             aria-current="page"
+             href="#">Topics</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active"
+             aria-current="page"
+             href="#">Redactors</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav me-2">
+        {#   Login link     #}
+        {#        <li class="nav-item">#}
+        {#          <a class="nav-link"#}
+        {#             href="">Login</a>#}
+        {#        </li>#}
+        {#     dropdown-menu     #}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"
+             href="#"
+             role="button"
+             data-bs-toggle="dropdown"
+             aria-expanded="false">
+            Account
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item"
+                   href="#">Logout</a></li>
+            <li><a class="dropdown-item"
+                   href="#">Another action</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item"
+                   href="#">Something else here</a></li>
+          </ul>
+        </li>
+        {#     end dropdown-menu     #}
+      </ul>
+      <form class="d-flex"
+            role="search">
+        <input class="form-control me-3"
+               type="search"
+               placeholder="Search"
+               aria-label="Search">
+        <button class="btn btn-outline-dark me-3"
+                type="submit">Search
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>

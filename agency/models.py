@@ -50,3 +50,8 @@ class Newspaper(models.Model):
 		verbose_name = 'newspaper'
 		verbose_name_plural = 'newspapers'
 		ordering = ['title']
+	
+	def get_short_content(self):
+		if len(self.content) > 75:
+			return self.content[:75] + '...'
+		return self.content

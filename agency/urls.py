@@ -19,10 +19,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from agency.views import index
+from agency.views import index, NewspaperListView
 
 urlpatterns = [
-    path("", index, name="index"),
+    path("", NewspaperListView.as_view(), name="index"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 app_name = "agency"

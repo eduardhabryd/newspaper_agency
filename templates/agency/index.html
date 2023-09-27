@@ -1,7 +1,23 @@
 {% extends "base.html" %}
-
-{% block title %}<title>Newspaper Agency</title>{% endblock %}
+{% load static %}
 
 {% block content %}
-  <h1>Hello world!</h1>
+  <div class="row mt-4">
+    {% for newspaper in newspaper_list %}
+      <div class="col">
+        <div class="card"
+             style="width: 17rem;">
+          <img src="{% static 'images/img.png' %}"
+               class="card-img-top"
+               alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ newspaper.title }} {{ page_obj.number }}</h5>
+            <p class="card-text" style="height: 4.5rem; text-overflow: ellipsis; overflow: hidden">{{ newspaper.get_short_content }}</p>
+            <a href="#"
+               class="btn btn-outline-dark">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
