@@ -19,7 +19,7 @@
         <li class="nav-item">
           <a class="nav-link active"
              aria-current="page"
-             href="#">Redactors</a>
+             href="{% url 'agency:redactor-list' %}">Redactors</a>
         </li>
       </ul>
       <ul class="navbar-nav me-2">
@@ -27,7 +27,7 @@
           {#   Login link     #}
           <li class="nav-item">
             <a class="nav-link"
-               href="">Login</a>
+               href="{% url 'agency:login' %}">Login</a>
           </li>
         {% else %}
           {#     dropdown-menu     #}
@@ -41,7 +41,7 @@
           </a>
           <ul class="dropdown-menu">
           <li><a class="dropdown-item"
-                 href="#">Logout</a></li>
+                 href="{% url 'agency:logout' %}">Logout</a></li>
           <li><a class="dropdown-item"
                  href="#">Another action</a></li>
           <li>
