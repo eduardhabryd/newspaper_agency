@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="row">
+    <h1 class="text-center">{{ newspaper.title }}</h1>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-6 offset-md-3">
+      {% for content in newspaper.get_content_list %}
+        <p>{{ content }}</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

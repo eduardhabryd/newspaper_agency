@@ -34,6 +34,9 @@ class Topic(models.Model):
 		verbose_name = 'topic'
 		verbose_name_plural = 'topics'
 		ordering = ['name']
+	
+	def image_name(self):
+		return self.name.lower().replace(' ', '_') + '.svg'
 
 
 class Newspaper(models.Model):
@@ -55,3 +58,7 @@ class Newspaper(models.Model):
 		if len(self.content) > 75:
 			return self.content[:75] + '...'
 		return self.content
+	
+	def get_content_list(self):
+		return self.content.split('\n')
+	

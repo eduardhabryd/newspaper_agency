@@ -9,12 +9,12 @@
         <li class="nav-item ms-5">
           <a class="nav-link active"
              aria-current="page"
-             href="#">Home</a>
+             href="{% url 'agency:index' %}">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active"
              aria-current="page"
-             href="#">Topics</a>
+             href="{% url 'agency:topic-list' %}">Topics</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active"
@@ -23,13 +23,15 @@
         </li>
       </ul>
       <ul class="navbar-nav me-2">
-        {#   Login link     #}
-        {#        <li class="nav-item">#}
-        {#          <a class="nav-link"#}
-        {#             href="">Login</a>#}
-        {#        </li>#}
-        {#     dropdown-menu     #}
-        <li class="nav-item dropdown">
+        {% if not user.is_authenticated %}
+          {#   Login link     #}
+          <li class="nav-item">
+            <a class="nav-link"
+               href="">Login</a>
+          </li>
+        {% else %}
+          {#     dropdown-menu     #}
+          <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle"
              href="#"
              role="button"
@@ -38,16 +40,17 @@
             Account
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item"
-                   href="#">Logout</a></li>
-            <li><a class="dropdown-item"
-                   href="#">Another action</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item"
-                   href="#">Something else here</a></li>
-          </ul>
+          <li><a class="dropdown-item"
+                 href="#">Logout</a></li>
+          <li><a class="dropdown-item"
+                 href="#">Another action</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item"
+                 href="#">Something else here</a></li>
+        {% endif %}
+        </ul>
         </li>
         {#     end dropdown-menu     #}
       </ul>
