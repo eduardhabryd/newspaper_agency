@@ -19,7 +19,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from agency.views import index, NewspaperListView, NewspaperDetailView, TopicListView, RedactorListView
+from agency.views import (
+    NewspaperListView,
+    NewspaperDetailView,
+    TopicListView,
+    RedactorListView,
+    NewspaperCreateView,
+    topic_news_list,
+    redactor_news_list
+)
 
 urlpatterns = [
     path("", NewspaperListView.as_view(), name="index"),
@@ -27,7 +35,9 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("topics/", TopicListView.as_view(), name="topic-list"),
     path("redactors/", RedactorListView.as_view(), name="redactor-list"),
-    path("newspaper/create")
+    path("newspaper/create", NewspaperCreateView.as_view(), name="newspaper-create"),
+    path("topic/<str:topic_name>", topic_news_list, name="topic-news"),
+    path("redactor/<int:redactor_id>", redactor_news_list, name="redactor-news"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 app_name = "agency"

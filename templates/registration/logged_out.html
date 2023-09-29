@@ -11,7 +11,21 @@
         rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
         crossorigin="anonymous">
-
+  <!-- Font Awesome -->
+  <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet"
+  />
+  <!-- MDB -->
+  <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
+      rel="stylesheet"
+  />
   <!-- Custom CSS -->
   <style>
       body {
@@ -50,7 +64,8 @@
 
         <p>You have been successfully logged out.</p>
 
-        <a href="{% url 'agency:login' %}" class="btn btn-dark">Log Back In</a>
+        <a href="{% url 'agency:login' %}"
+           class="btn btn-dark">Log Back In</a>
       </div>
     </div>
   </div>
@@ -58,8 +73,9 @@
 
 <div class="container">
   <div class="row text-center">
-    <div class="col-4 offset-4">
-      <a href="{% url 'agency:index' %}" class="btn text-muted"> <- Home</a>
+    <div class="col-4 offset-4 mt-3">
+      <a href="{% url 'agency:index' %}"
+         class="btn text-muted"> <- Home</a>
     </div>
   </div>
 </div>
@@ -68,5 +84,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+<!-- MDB -->
+<script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
+></script>
 </body>
 </html>

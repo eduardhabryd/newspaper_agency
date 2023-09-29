@@ -5,7 +5,7 @@
   <div class="row mt-4 mx-auto justify-content-center">
     {% for redactor in redactor_list %}
       <div class="col-4">
-        <a class="btn" href="">
+        <a class="btn" href="{% url 'agency:redactor-news' redactor.id %}">
           <div class="card" style="width: 18rem;">
             <img style="width:70px;height:70px;" class="card-img-top mx-auto mt-4" src="https://picsum.photos/1920/1080" alt="...">
             <div class="card-body">

@@ -52,7 +52,7 @@ class Newspaper(models.Model):
 	class Meta:
 		verbose_name = 'newspaper'
 		verbose_name_plural = 'newspapers'
-		ordering = ['title']
+		ordering = ['-published_date']
 	
 	def get_short_content(self):
 		if len(self.content) > 75:

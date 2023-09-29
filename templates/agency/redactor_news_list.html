@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="row justify-content-evenly">
+    <h1>Latest articles of {{ topic_name }}<a class="btn btn-dark ms-3" href="{% url 'agency:newspaper-create' %}">Create</a></h1>
+    {% for newspaper in news %}
+      <div class="col-3">
+        <div class="card mt-5"
+             style="width: 17rem;">
+          <img src="https://picsum.photos/1920/1080"
+               class="card-img-top"
+               alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ newspaper.title }}</h5>
+            <span class="text-muted text-light text-sm">by {{ redactor_name }}</span>
+            <p class="card-text" style="height: 4.5rem; text-overflow: ellipsis; overflow: hidden">{{ newspaper.get_short_content }}</p>
+            <a href="{% url 'agency:newspaper-detail' newspaper.id %}"
+               class="btn btn-outline-dark ms-3">Read</a>
+            <span class="ms-3 text-muted">tag: {{ newspaper.topic.name }} </span>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
