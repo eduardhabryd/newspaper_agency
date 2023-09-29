@@ -1,9 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from agency.forms import NewspaperCreateForm
+from agency.forms import NewspaperCreateForm, NewspaperSearchForm, TopicSearchForm, RedactorSearchForm
 from agency.models import Newspaper, Topic, Redactor
 
 
@@ -15,13 +16,29 @@ class NewspaperListView(generic.ListView):
     model = Newspaper
     paginate_by = 4
     template_name = 'agency/index.html'
+    queryset = Newspaper.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(NewspaperListView, self).get_context_data(**kwargs)
+        title = self.request.GET.get("title", "")
+        context["search_form"] = NewspaperSearchForm(initial={"title": title})
+        return context
+
+    def get_queryset(self):
+        form = NewspaperSearchForm(self.request.GET)
+
+        if form.is_valid():
+            return self.queryset.filter(
+                title__icontains=form.cleaned_data["title"]
+            )
+        return self.queryset
 
 
 class NewspaperDetailView(generic.DetailView):
     model = Newspaper
 
 
-class NewspaperCreateView(generic.CreateView):
+class NewspaperCreateView(LoginRequiredMixin, generic.CreateView):
     model = Newspaper
     success_url = reverse_lazy('agency:index')
     form_class = NewspaperCreateForm
@@ -30,13 +47,39 @@ class NewspaperCreateView(generic.CreateView):
 class TopicListView(generic.ListView):
     model = Topic
     paginate_by = 4
+    queryset = Topic.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TopicListView, self).get_context_data(**kwargs)
+        title = self.request.GET.get("name", "")
+        context["search_form"] = TopicSearchForm(initial={"name": title})
+        return context
+
+    def get_queryset(self):
+        form = TopicSearchForm(self.request.GET)
+
+        if form.is_valid():
+            return self.queryset.filter(
+                name__icontains=form.cleaned_data["name"]
+            )
+        return self.queryset
 
 
 def topic_news_list(request, topic_name):
-    news_list = Newspaper.objects.filter(topic__name=topic_name).order_by('-published_date')
+    queryset = Newspaper.objects.filter(topic__name=topic_name).order_by('-published_date')
     items_per_page = 4
 
-    paginator = Paginator(news_list, items_per_page)
+    title = request.GET.get("title", "")
+    search_form = NewspaperSearchForm(initial={"title": title})
+
+    form = NewspaperSearchForm(request.GET)
+
+    if form.is_valid():
+        queryset = queryset.filter(
+            title__icontains=form.cleaned_data["title"]
+        )
+
+    paginator = Paginator(queryset, items_per_page)
     page = request.GET.get('page')
 
     try:
@@ -48,10 +91,11 @@ def topic_news_list(request, topic_name):
 
     context = {
         'topic_name': topic_name,
-        'news': news,
+        'newspaper_list': news,
         'page_obj': news,  # Pass the 'news' object as 'page_obj'
         'paginator': paginator,  # Pass the 'paginator' object
-        "is_paginated": news.has_other_pages
+        "is_paginated": news.has_other_pages,
+        "search_form": search_form
     }
 
     return render(request, 'agency/topic_news_list.html', context)
@@ -59,16 +103,42 @@ def topic_news_list(request, topic_name):
 
 class RedactorListView(generic.ListView):
     model = Redactor
+    queryset = Redactor.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(RedactorListView, self).get_context_data(**kwargs)
+        username = self.request.GET.get("username", "")
+        context["search_form"] = RedactorSearchForm(initial={"username": username})
+        return context
+
+    def get_queryset(self):
+        form = RedactorSearchForm(self.request.GET)
+
+        if form.is_valid():
+            return self.queryset.filter(
+                username__icontains=form.cleaned_data["username"]
+            )
+        return self.queryset
 
 
 def redactor_news_list(request, redactor_id):
     redactor = Redactor.objects.get(id=redactor_id)
     redactor_name = redactor.username
-    news_list = Newspaper.objects.filter(publishers__id=redactor_id).order_by('-published_date')
+    queryset = Newspaper.objects.filter(publishers__id=redactor_id).order_by('-published_date')
 
     items_per_page = 4
 
-    paginator = Paginator(news_list, items_per_page)
+    title = request.GET.get("title", "")
+    search_form = NewspaperSearchForm(initial={"title": title})
+
+    form = NewspaperSearchForm(request.GET)
+
+    if form.is_valid():
+        queryset = queryset.filter(
+            title__icontains=form.cleaned_data["title"]
+        )
+
+    paginator = Paginator(queryset, items_per_page)
     page = request.GET.get('page')
 
     try:
@@ -80,10 +150,11 @@ def redactor_news_list(request, redactor_id):
 
     context = {
         'redactor_name': redactor_name,
-        'news': news,
-        'page_obj': news,  # Pass the 'news' object as 'page_obj'
-        'paginator': paginator,  # Pass the 'paginator' object
-        "is_paginated": news.has_other_pages
+        'newspaper_list': news,
+        'page_obj': news,
+        'paginator': paginator,
+        "is_paginated": news.has_other_pages,
+        "search_form": search_form
     }
 
     return render(request, 'agency/redactor_news_list.html', context)

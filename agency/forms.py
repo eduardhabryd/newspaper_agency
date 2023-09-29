@@ -37,3 +37,51 @@ class NewspaperCreateForm(forms.ModelForm):
         }),
         initial="Example placeholder",
     )
+
+
+class NewspaperSearchForm(forms.Form):
+    title = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Search by title",
+                "class": "form-control me-3",
+                "type": "search",
+                "aria-label": "Search"
+            }
+        ),
+    )
+
+
+class TopicSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Search by topic name",
+                "class": "form-control me-3",
+                "type": "search",
+                "aria-label": "Search"
+            }
+        ),
+    )
+
+
+class RedactorSearchForm(forms.Form):
+    username = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Search by username",
+                "class": "form-control me-3",
+                "type": "search",
+                "aria-label": "Search"
+            }
+        ),
+    )

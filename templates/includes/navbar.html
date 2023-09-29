@@ -22,47 +22,43 @@
              href="{% url 'agency:redactor-list' %}">Redactors</a>
         </li>
       </ul>
+      {% if not search_form %}
+        <div class="w-25"></div>
+      {% endif %}
       <ul class="navbar-nav me-2">
         {% if not user.is_authenticated %}
-          {#   Login link     #}
           <li class="nav-item">
             <a class="nav-link"
                href="{% url 'agency:login' %}">Login</a>
           </li>
         {% else %}
-          {#     dropdown-menu     #}
           <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle"
              href="#"
              role="button"
              data-bs-toggle="dropdown"
              aria-expanded="false">
-            Account
+            {{ user.username }}
           </a>
           <ul class="dropdown-menu">
           <li><a class="dropdown-item"
                  href="{% url 'agency:logout' %}">Logout</a></li>
-          <li><a class="dropdown-item"
-                 href="#">Another action</a></li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item"
-                 href="#">Something else here</a></li>
         {% endif %}
         </ul>
         </li>
-        {#     end dropdown-menu     #}
       </ul>
       <form class="d-flex"
             role="search">
-        <input class="form-control me-3"
-               type="search"
-               placeholder="Search"
-               aria-label="Search">
-        <button class="btn btn-outline-dark me-3"
-                type="submit">Search
-        </button>
+        {#        <input class="form-control me-3"#}
+        {#               type="search"#}
+        {#               placeholder="Search"#}
+        {#               aria-label="Search">#}
+        {% if search_form %}
+          {{ search_form }}
+          <button class="btn btn-outline-dark me-3"
+                  type="submit">Search
+          </button>
+        {% endif %}
       </form>
     </div>
   </div>

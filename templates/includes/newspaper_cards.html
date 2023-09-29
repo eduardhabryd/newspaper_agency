@@ -1,6 +1,4 @@
 <div class="row justify-content-evenly">
-  <h1>Latest articles <a class="btn btn-dark ms-3"
-                         href="{% url 'agency:newspaper-create' %}">Create</a></h1>
   {% for newspaper in newspaper_list %}
     <div class="col-3">
       <div class="card mt-5"
@@ -10,10 +8,10 @@
              alt="...">
         <div class="card-body">
           <h5 class="card-title">{{ newspaper.title }} {{ page_obj.number }}</h5>
-          <p class="card-text"
+            <p class="card-text"
              style="height: 4.5rem; text-overflow: ellipsis; overflow: hidden">{{ newspaper.get_short_content }}</p>
           <a href="{% url 'agency:newspaper-detail' newspaper.id %}"
-             class="btn btn-outline-dark ms-3">Read</a>
+             class="btn btn-outline-dark">Read</a>
           <span class="ms-3 text-muted">tag: {{ newspaper.topic.name }} </span>
         </div>
       </div>

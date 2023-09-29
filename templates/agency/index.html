@@ -2,5 +2,7 @@
 {% load static %}
 
 {% block content %}
+  <h1>Latest articles <a class="btn btn-dark ms-3"
+                         href="{% url 'agency:newspaper-create' %}">Create</a></h1>
   {% include "includes/newspaper_cards.html" %}
 {% endblock %}
