@@ -26,7 +26,10 @@ from agency.views import (
     RedactorListView,
     NewspaperCreateView,
     topic_news_list,
-    redactor_news_list
+    redactor_news_list,
+    NewspaperDeleteView,
+    NewspaperUpdateView,
+    register_request
 )
 
 urlpatterns = [
@@ -38,6 +41,9 @@ urlpatterns = [
     path("newspaper/create", NewspaperCreateView.as_view(), name="newspaper-create"),
     path("topic/<str:topic_name>", topic_news_list, name="topic-news"),
     path("redactor/<int:redactor_id>", redactor_news_list, name="redactor-news"),
+    path("newspaper/<int:pk>/update", NewspaperUpdateView.as_view(), name="newspaper-update"),
+    path("newspaper/<int:pk>/delete", NewspaperDeleteView.as_view(), name="newspaper-delete"),
+    path("register/", register_request, name="register"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 app_name = "agency"

@@ -3,16 +3,16 @@
     <div class="col-3">
       <div class="card mt-5"
            style="width: 17rem;">
-        <img src="https://picsum.photos/1920/1080"
+        <img src="{% if newspaper.image %}{{ newspaper.image.url }}{% endif %}"
              class="card-img-top"
-             alt="...">
+             alt="..." height="150px">
         <div class="card-body">
           <h5 class="card-title">{{ newspaper.title }} {{ page_obj.number }}</h5>
             <p class="card-text"
              style="height: 4.5rem; text-overflow: ellipsis; overflow: hidden">{{ newspaper.get_short_content }}</p>
           <a href="{% url 'agency:newspaper-detail' newspaper.id %}"
              class="btn btn-outline-dark">Read</a>
-          <span class="ms-3 text-muted">tag: {{ newspaper.topic.name }} </span>
+          <span class="ms-3 text-muted">tag: <a class="link-info" href="{% url 'agency:topic-news' newspaper.topic.name %}">{{ newspaper.topic.name }}</a> </span>
         </div>
       </div>
     </div>

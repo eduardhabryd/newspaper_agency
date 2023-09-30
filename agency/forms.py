@@ -1,14 +1,11 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.forms import SelectMultiple
 
 from agency.models import Newspaper, Redactor, Topic
 
 
 class NewspaperCreateForm(forms.ModelForm):
-    class Meta:
-        model = Newspaper
-        fields = ['title', 'content', 'topic', 'publishers']
-
     title = forms.CharField(label='Title', widget=forms.TextInput(
         attrs={
             'placeholder': 'Put your title here',
@@ -19,6 +16,15 @@ class NewspaperCreateForm(forms.ModelForm):
 
     content = forms.CharField(label='Content', widget=forms.Textarea(
         attrs={'placeholder': 'Here should be your content', 'class': 'form-control'}))
+
+    image = forms.ImageField(
+        label='Image',
+        widget=forms.FileInput(
+            attrs={
+                'class': 'form-control',
+            }),
+        required=False
+    )
 
     topic = forms.ModelChoiceField(
         queryset=Topic.objects.all(),
@@ -37,6 +43,10 @@ class NewspaperCreateForm(forms.ModelForm):
         }),
         initial="Example placeholder",
     )
+
+    class Meta:
+        model = Newspaper
+        fields = ['title', 'content', 'image', 'topic', 'publishers']
 
 
 class NewspaperSearchForm(forms.Form):
@@ -85,3 +95,16 @@ class RedactorSearchForm(forms.Form):
             }
         ),
     )
+
+
+class NewUserForm(UserCreationForm):
+    class Meta:
+        model = Redactor
+        fields = ("username", "email", "first_name", "last_name", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super(NewUserForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return user

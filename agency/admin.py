@@ -7,6 +7,12 @@ from agency.models import Redactor, Newspaper, Topic
 @admin.register(Redactor)
 class RedactorAdmin(UserAdmin):
     list_display = ('username', 'years_of_experience')
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        (
+            "Personal info",
+            {'fields': ("first_name", "last_name", 'years_of_experience',)}
+        ),
+    )
 
 
 @admin.register(Newspaper)

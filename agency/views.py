@@ -1,10 +1,12 @@
+from django.contrib import messages
+from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from agency.forms import NewspaperCreateForm, NewspaperSearchForm, TopicSearchForm, RedactorSearchForm
+from agency.forms import NewspaperCreateForm, NewspaperSearchForm, TopicSearchForm, RedactorSearchForm, NewUserForm
 from agency.models import Newspaper, Topic, Redactor
 
 
@@ -42,6 +44,33 @@ class NewspaperCreateView(LoginRequiredMixin, generic.CreateView):
     model = Newspaper
     success_url = reverse_lazy('agency:index')
     form_class = NewspaperCreateForm
+
+    def form_valid(self, form):
+        newspaper = form.save(commit=False)
+        if 'image' in self.request.FILES:
+            newspaper.image = self.request.FILES['image']
+        newspaper.save()
+        form.save_m2m()
+        return super().form_valid(form)
+
+
+class NewspaperUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Newspaper
+    success_url = reverse_lazy('agency:index')
+    form_class = NewspaperCreateForm
+
+    def form_valid(self, form):
+        newspaper = form.save(commit=False)
+        if 'image' in self.request.FILES:
+            newspaper.image = self.request.FILES['image']
+        newspaper.save()
+        form.save_m2m()
+        return super().form_valid(form)
+
+
+class NewspaperDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Newspaper
+    success_url = reverse_lazy('agency:index')
 
 
 class TopicListView(generic.ListView):
@@ -158,3 +187,16 @@ def redactor_news_list(request, redactor_id):
     }
 
     return render(request, 'agency/redactor_news_list.html', context)
+
+
+def register_request(request):
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful.")
+            return redirect("agency:index")
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+    form = NewUserForm()
+    return render(request=request, template_name="registration/register.html", context={"register_form": form})

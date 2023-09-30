@@ -2,12 +2,23 @@
 
 {% block content %}
   <div class="row">
-    <h1 class="text-center">{{ newspaper.title }}</h1>
+    <h1 class="text-center">{{ newspaper.title }}
+      {% if user.is_superuser or user in newspaper.publishers.all %}
+      <span>
+        <a class="btn btn-sm btn-outline-black ms-3 mb-2"
+           href="{% url 'agency:newspaper-update' newspaper.id %}">Edit</a>
+      </span>
+      <span>
+        <a class="btn btn-sm btn-danger ms-1 mb-2"
+           href="{% url 'agency:newspaper-delete' newspaper.id %}">Delete</a>
+      </span>
+      {% endif %}
+    </h1>
   </div>
   <hr class="mx-auto"
       style="width: 700px">
   <div class="text-center">
-    <img src="https://picsum.photos/1920/1080"
+    <img src="{% if newspaper.image %}{{ newspaper.image.url }}{% endif %}"
          alt=""
          style="width: 550px; height: 300px">
   </div>
@@ -18,7 +29,8 @@
       {% endfor %}
     </div>
   </div>
-  <div class="fixed-left fixed-top ms-5" style="margin-top: 20%">
+  <div class="fixed-left fixed-top ms-5"
+       style="margin-top: 20%">
     {% include 'includes/go_back_button.html' %}
   </div>
 {% endblock %}
