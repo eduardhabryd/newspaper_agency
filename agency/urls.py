@@ -29,7 +29,7 @@ from agency.views import (
     redactor_news_list,
     NewspaperDeleteView,
     NewspaperUpdateView,
-    register_request
+    register_request, RedactorUpdateView,
 )
 
 urlpatterns = [
@@ -44,6 +44,7 @@ urlpatterns = [
     path("newspaper/<int:pk>/update", NewspaperUpdateView.as_view(), name="newspaper-update"),
     path("newspaper/<int:pk>/delete", NewspaperDeleteView.as_view(), name="newspaper-delete"),
     path("register/", register_request, name="register"),
+    path("redactor/<int:pk>/update", RedactorUpdateView.as_view(), name="redactor-update"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 app_name = "agency"

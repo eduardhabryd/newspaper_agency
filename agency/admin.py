@@ -10,8 +10,11 @@ class RedactorAdmin(UserAdmin):
     add_fieldsets = UserAdmin.add_fieldsets + (
         (
             "Personal info",
-            {'fields': ("first_name", "last_name", 'years_of_experience',)}
+            {'fields': ("first_name", "last_name", 'years_of_experience', "profile_image")}
         ),
+    )
+    fieldsets = UserAdmin.fieldsets + (
+        ("Other", {"fields": ("profile_image",)}),
     )
 
 

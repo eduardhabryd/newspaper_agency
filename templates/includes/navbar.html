@@ -42,6 +42,9 @@
           </a>
           <ul class="dropdown-menu">
           <li><a class="dropdown-item"
+                 href="{% url 'agency:redactor-update' user.id %}">Profile</a></li>
+          <li class="dropdown-divider"></li>
+          <li><a class="dropdown-item"
                  href="{% url 'agency:logout' %}">Logout</a></li>
         {% endif %}
         </ul>
@@ -49,10 +52,6 @@
       </ul>
       <form class="d-flex"
             role="search">
-        {#        <input class="form-control me-3"#}
-        {#               type="search"#}
-        {#               placeholder="Search"#}
-        {#               aria-label="Search">#}
         {% if search_form %}
           {{ search_form }}
           <button class="btn btn-outline-dark me-3"

@@ -4,23 +4,37 @@
   <div class="row">
     <h1 class="text-center">{{ newspaper.title }}
       {% if user.is_superuser or user in newspaper.publishers.all %}
-      <span>
+        <span>
         <a class="btn btn-sm btn-outline-black ms-3 mb-2"
            href="{% url 'agency:newspaper-update' newspaper.id %}">Edit</a>
       </span>
-      <span>
+        <span>
         <a class="btn btn-sm btn-danger ms-1 mb-2"
            href="{% url 'agency:newspaper-delete' newspaper.id %}">Delete</a>
       </span>
       {% endif %}
     </h1>
+  <p class="text-center text-muted">
+    by
+    {% for publisher in newspaper.get_publishers %}
+      <a href="{% url 'agency:redactor-news' publisher.id %}">{{ publisher.name }}</a>
+      {% if not forloop.last %}, {% endif %}
+    {% endfor %}
+  </p>
   </div>
   <hr class="mx-auto"
       style="width: 700px">
   <div class="text-center">
-    <img src="{% if newspaper.image %}{{ newspaper.image.url }}{% endif %}"
-         alt=""
-         style="width: 550px; height: 300px">
+    <img src="
+            {% if newspaper.image %}
+            {{ newspaper.image.url }}
+            {% else %}
+            https://picsum.photos/1920/1080
+            {% endif %}"
+         class="card-img-top"
+         alt="..."
+         style="width: 50%"
+    >
   </div>
   <div class="row mt-4">
     <div class="col-md-6 offset-md-3">

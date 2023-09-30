@@ -1,126 +1,208 @@
-{
-  "topics": [
-    {
+[
+  {
+    "model": "agency.redactor",
+    "pk": 1,
+    "fields": {
+      "username": "johndoe",
+      "first_name": "John",
+      "last_name": "Doe",
+      "email": "john.doe@example.com",
+      "password": "password123",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "agency.redactor",
+    "pk": 2,
+    "fields": {
+      "username": "janedoe",
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "email": "jane.doe@example.com",
+      "password": "password123",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "agency.redactor",
+    "pk": 3,
+    "fields": {
+      "username": "peterparker",
+      "first_name": "Peter",
+      "last_name": "Parker",
+      "email": "peter.parker@example.com",
+      "password": "password123",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "agency.redactor",
+    "pk": 4,
+    "fields": {
+      "username": "maryjane",
+      "first_name": "Mary",
+      "last_name": "Jane",
+      "email": "mary.jane@example.com",
+      "password": "password123",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "agency.redactor",
+    "pk": 5,
+    "fields": {
+      "username": "brucewayne",
+      "first_name": "Bruce",
+      "last_name": "Wayne",
+      "email": "bruce.wayne@example.com",
+      "password": "password123",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "agency.redactor",
+    "pk": 6,
+    "fields": {
+      "username": "clarkkent",
+      "first_name": "Clark",
+      "last_name": "Kent",
+      "email": "clark.kent@example.com",
+      "password": "password123",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "agency.redactor",
+    "pk": 7,
+    "fields": {
+      "username": "dianaprince",
+      "first_name": "Diana",
+      "last_name": "Prince",
+      "email": "diana.prince@example.com",
+      "password": "password123",
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+  {
+    "model": "agency.topic",
+    "pk": 1,
+    "fields": {
       "name": "Politics"
-    },
-    {
+    }
+  },
+  {
+    "model": "agency.topic",
+    "pk": 2,
+    "fields": {
       "name": "Crime"
-    },
-    {
+    }
+  },
+  {
+    "model": "agency.topic",
+    "pk": 3,
+    "fields": {
       "name": "Business"
-    },
-    {
+    }
+  },
+  {
+    "model": "agency.topic",
+    "pk": 4,
+    "fields": {
       "name": "Art"
-    },
-    {
+    }
+  },
+  {
+    "model": "agency.topic",
+    "pk": 5,
+    "fields": {
       "name": "Trade"
-    },
-    {
+    }
+  },
+  {
+    "model": "agency.topic",
+    "pk": 6,
+    "fields": {
       "name": "Weather"
     }
-  ],
-  "authors": [
-    {
-      "first_name": "John",
-      "last_name": "Smith"
-    },
-    {
-      "first_name": "Emily",
-      "last_name": "Johnson"
-    },
-    {
-      "first_name": "David",
-      "last_name": "Williams"
-    },
-    {
-      "first_name": "Olivia",
-      "last_name": "Brown"
-    },
-    {
-      "first_name": "Michael",
-      "last_name": "Davis"
-    },
-    {
-      "first_name": "Sophia",
-      "last_name": "Miller"
-    },
-    {
-      "first_name": "Daniel",
-      "last_name": "Moore"
+  },
+  {
+    "model": "agency.newspaper",
+    "pk": 1,
+    "fields": {
+      "title": "New President Elected",
+      "content": "The new president of the United States has been elected. The winner of the election is Joe Biden. Biden has pledged to unite the country and address the challenges facing the nation.",
+      "published_date": "2023-09-30T18:39:43Z",
+      "topic": 1,
+      "publishers": [1]
     }
-  ],
-  "newspapers": [
-    {
-      "title": "Political News Today",
-      "content": "In an eventful day at the Capitol, lawmakers passed a historic bill that will shape the future of our nation. The President's reaction and the public's response were mixed.",
-      "topic": "Politics",
-      "publishers": ["John Smith", "Emily Johnson"]
-    },
-    {
-      "title": "Crime Watch",
-      "content": "A high-profile robbery took place last night at the city's largest jewelry store. The suspects are still at large, and authorities are seeking information from the public to solve the case.",
-      "topic": "Crime",
-      "publishers": ["David Williams", "Olivia Brown"]
-    },
-    {
-      "title": "Business Insider",
-      "content": "Tech giant XYZ Corporation announced record-breaking quarterly profits. Investors are optimistic about the company's future, and its stock price surged by 15%.",
-      "topic": "Business",
-      "publishers": ["Michael Davis", "Sophia Miller"]
-    },
-    {
-      "title": "Artistic Expressions",
-      "content": "A renowned artist unveiled a breathtaking new sculpture in the city's central park. The artwork has already garnered international acclaim, and art enthusiasts are flocking to see it.",
-      "topic": "Art",
-      "publishers": ["Daniel Moore", "John Smith"]
-    },
-    {
-      "title": "Trade Talks",
-      "content": "Trade negotiations between two major economic powers are intensifying. Tariff discussions and market access are key points of contention, and experts are closely watching the developments.",
-      "topic": "Trade",
-      "publishers": ["Emily Johnson", "David Williams"]
-    },
-    {
-      "title": "Weather Report",
-      "content": "Meteorologists predict a sunny and warm weekend ahead. Perfect weather for outdoor activities, so plan your picnics and hikes accordingly.",
-      "topic": "Weather",
-      "publishers": ["Olivia Brown", "Michael Davis"]
-    },
-    {
-      "title": "Political Analysis",
-      "content": "A leading political analyst provides insights into the upcoming elections. The race is tight, and candidates are focusing on key battleground states to secure victory.",
-      "topic": "Politics",
-      "publishers": ["Sophia Miller", "Daniel Moore"]
-    },
-    {
-      "title": "Crime Chronicles",
-      "content": "An in-depth look at the history of organized crime in our city. Experts weigh in on the challenges law enforcement faces in combating criminal syndicates.",
-      "topic": "Crime",
-      "publishers": ["John Smith", "Emily Johnson"]
-    },
-    {
-      "title": "Business Insights",
-      "content": "Entrepreneurship is on the rise, with a surge in startups in our region. We explore the success stories and challenges faced by these innovative businesses.",
-      "topic": "Business",
-      "publishers": ["David Williams", "Olivia Brown"]
-    },
-    {
-      "title": "Artistic Creations",
-      "content": "Local artists are pushing boundaries with their innovative works. We profile the artists and their contributions to the cultural scene.",
-      "topic": "Art",
-      "publishers": ["Sophia Miller", "Daniel Moore"]
-    },
-    {
-      "title": "Trade Updates",
-      "content": "Global trade dynamics are shifting, impacting various industries. Trade experts analyze the trends and potential consequences for businesses and consumers.",
-      "topic": "Trade",
-      "publishers": ["Michael Davis", "Sophia Miller"]
-    },
-    {
-      "title": "Weather Forecast",
-      "content": "Get ready for a rainy week ahead. Meteorologists predict heavy rainfall, so be prepared and stay safe during the wet weather.",
-      "topic": "Weather",
-      "publishers": ["Emily Johnson", "David Williams"]
+  },
+  {
+    "model": "agency.newspaper",
+    "pk": 2,
+    "fields": {
+      "title": "Crime Rate on the Rise",
+      "content": "The crime rate in the United States has been on the rise in recent years. This is a cause for concern for many citizens. Law enforcement officials are working to address the problem, but more needs to be done to prevent crime and make communities safer.",
+      "published_date": "2023-09-30T18:39:43Z",
+      "topic": 2,
+      "publishers": [2]
     }
-  ]
-}
+  },
+  {
+    "model": "agency.newspaper",
+    "pk": 3,
+    "fields": {
+      "title": "New Business Ventures",
+      "content": "There are many new business ventures being launched every day. These new businesses are creating jobs and stimulating the economy. One of the most exciting new businesses is the development of self-driving cars. Self-driving cars have the potential to revolutionize transportation and make our roads safer.",
+      "published_date": "2023-09-30T18:39:43Z",
+      "topic": 3,
+      "publishers": [3]
+    }
+  },
+  {
+    "model": "agency.newspaper",
+    "pk": 4,
+    "fields": {
+      "title": "Art Exhibition Opens",
+      "content": "A new art exhibition has opened at the local museum. The exhibition features works from a variety of artists from around the world. The exhibition is a must-see for any art lover.",
+      "published_date": "2023-09-30T18:39:43Z",
+      "topic": 4,
+      "publishers": [4]
+    }
+  },
+  {
+    "model": "agency.newspaper",
+    "pk": 5,
+    "fields": {
+      "title": "Trade Agreement Reached",
+      "content": "The United States and China have reached a new trade agreement. This agreement is a positive step for both countries and will benefit businesses and consumers on both sides. The agreement is expected to boost economic growth and create jobs in both countries.",
+      "published_date": "2023-09-30T18:39:43Z",
+      "topic": 5,
+      "publishers": [5]
+    }
+  },
+  {
+    "model": "agency.newspaper",
+    "pk": 6,
+    "fields": {
+      "title": "Heat Wave to Hit",
+      "content": "A heat wave is expected to hit the region in the next few days. Temperatures are expected to reach into the 90s Fahrenheit. People are advised to stay hydrated and avoid strenuous activity during the heat of the day. Heat waves can be dangerous, so it is important to take precautions to stay safe.",
+      "published_date": "2023-09-30T18:39:43Z",
+      "topic": 6,
+      "publishers": [6]
+    }
+  }
+]

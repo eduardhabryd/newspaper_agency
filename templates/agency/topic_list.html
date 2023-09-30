@@ -4,7 +4,7 @@
 {% block content %}
   <div class="row mt-4 mx-auto justify-content-center">
     {% for topic in topic_list %}
-      <div class="col">
+      <div class="col text-center">
         <a class="btn" href="{% url 'agency:topic-news' topic.name %}">
           <div class="card" style="width: 18rem;">
             <img style="width:70px;height:70px;" class="card-img-top mx-auto mt-4" src="{% static 'images/' %}{{ topic.image_name }}" alt="...">
