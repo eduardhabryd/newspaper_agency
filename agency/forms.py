@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import SelectMultiple
+from django.contrib.auth.forms import PasswordChangeForm
 
 from agency.models import Newspaper, Redactor, Topic
 
@@ -129,18 +130,72 @@ class RedactorUpdateForm(forms.ModelForm):
         label='Profile Image',
         widget=forms.FileInput(
             attrs={
-                'class': 'form-control mt-2',
+                'class': 'form-control mt-2 mb-3',
             }),
         required=False
+    )
+
+    old_password = forms.CharField(
+        label='Old Password',
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control mb-3',
+                'placeholder': 'Enter your old password',
+            }
+        ),
+        required=False  # This field is optional
+    )
+
+    new_password1 = forms.CharField(
+        label='New Password',
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control mb-3',
+                'placeholder': 'Enter your new password',
+            }
+        ),
+        required=False  # This field is optional
+    )
+
+    new_password2 = forms.CharField(
+        label='Confirm New Password',
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control mb-3',
+                'placeholder': 'Confirm your new password',
+            }
+        ),
+        required=False  # This field is optional
     )
 
     class Meta:
         model = Redactor
         fields = ("first_name", "last_name", "profile_image")
 
+    def clean(self):
+        cleaned_data = super().clean()
+
+        old_password = cleaned_data.get('old_password')
+        new_password1 = cleaned_data.get('new_password1')
+        new_password2 = cleaned_data.get('new_password2')
+
+        if old_password and not self.user.check_password(old_password):
+            raise forms.ValidationError("The old password is incorrect.")
+
+        if new_password1 and new_password2:
+            if new_password1 != new_password2:
+                raise forms.ValidationError("The new passwords do not match.")
+            elif old_password == new_password1:
+                raise forms.ValidationError("The new password cannot be the same as the old password.")
+
+        return cleaned_data
+
     def save(self, commit=True):
         user = super(RedactorUpdateForm, self).save(commit=False)
         user.first_name = self.cleaned_data['first_name']
+        if self.cleaned_data['new_password1']:
+            user.set_password(self.cleaned_data['new_password1'])
         if commit:
             user.save()
         return user
+
