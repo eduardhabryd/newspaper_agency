@@ -4,7 +4,13 @@ Django project for creating and reading newspapers.
 
 ## Check it out!
 
-[Newspaper Agency Project deployed to Render](https://render.com/newspaper-agency)
+[Newspaper Agency Project deployed to Render](https://the-newspaper-nexus.onrender.com/)
+
+Test User:
+```
+login: test_user
+password: NeRQREDu6Bvs5Z
+```
 
 ## Installation
 
