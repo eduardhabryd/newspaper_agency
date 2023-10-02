@@ -1,5 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
@@ -189,12 +190,26 @@ class RedactorUpdateView(generic.UpdateView):
 	template_name = 'agency/redactor_update.html'
 	form_class = RedactorUpdateForm
 
+	def get_form(self, form_class=None):
+		# Pass the request user to the form
+		form = super().get_form(form_class)
+		form.user = self.request.user
+		return form
+
 	def form_valid(self, form):
 		redactor = form.save(commit=False)
 		if 'profile_image' in self.request.FILES:
 			redactor.profile_image = self.request.FILES['profile_image']
 		redactor.save()
 		form.save_m2m()
+
+		# Handle password change
+		password_form = PasswordChangeForm(self.request.user, self.request.POST)
+		if password_form.is_valid():
+			password_form.save()
+			# Update the session to prevent logout after password change
+			update_session_auth_hash(self.request, password_form.user)
+
 		return super().form_valid(form)
 
 
