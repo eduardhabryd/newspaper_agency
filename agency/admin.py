@@ -6,11 +6,18 @@ from agency.models import Redactor, Newspaper, Topic
 
 @admin.register(Redactor)
 class RedactorAdmin(UserAdmin):
-    list_display = ('username', 'years_of_experience')
+    list_display = ("username", "years_of_experience")
     add_fieldsets = UserAdmin.add_fieldsets + (
         (
             "Personal info",
-            {'fields': ("first_name", "last_name", 'years_of_experience', "profile_image")}
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "years_of_experience",
+                    "profile_image",
+                )
+            },
         ),
     )
     fieldsets = UserAdmin.fieldsets + (
@@ -20,9 +27,9 @@ class RedactorAdmin(UserAdmin):
 
 @admin.register(Newspaper)
 class NewspaperAdmin(admin.ModelAdmin):
-    list_display = ('title', "topic", "published_date")
+    list_display = ("title", "topic", "published_date")
 
 
 @admin.register(Topic)
 class TopicAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ("name",)

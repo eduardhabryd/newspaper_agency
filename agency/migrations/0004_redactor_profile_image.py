@@ -12,6 +12,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="redactor",
             name="profile_image",
-            field=models.ImageField(null=True, upload_to="newspaper_images/redactors"),
+            field=models.ImageField(
+                null=True, upload_to="newspaper_images/redactors"
+            ),
         ),
     ]
