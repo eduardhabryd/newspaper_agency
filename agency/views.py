@@ -102,7 +102,7 @@ class TopicListView(generic.ListView):
 
 class TopicNewsListView(generic.ListView):
 	model = Newspaper
-	template_name = 'agency/topic_news_list.html'  # Replace with your template name
+	template_name = 'agency/topic_news_list.html'
 	context_object_name = 'newspaper_list'
 	paginate_by = 4
 
@@ -196,43 +196,28 @@ class RedactorUpdateView(generic.UpdateView):
 		return super().form_valid(form)
 
 
-def redactor_news_list(request, redactor_id):
-	redactor = Redactor.objects.get(id=redactor_id)
-	redactor_name = redactor.get_full_name()
-	queryset = Newspaper.objects.filter(publishers__id=redactor_id).order_by('-published_date')
+class RedactorNewsListView(generic.ListView):
+	model = Newspaper
+	template_name = 'agency/redactor_news_list.html'
+	context_object_name = "newspaper_list"
+	paginate_by = 4
 
-	items_per_page = 4
+	def get_queryset(self):
+		redactor_id = self.kwargs['redactor_id']
+		title = self.request.GET.get("title", "")
+		queryset = super().get_queryset()
 
-	title = request.GET.get("title", "")
-	search_form = NewspaperSearchForm(initial={"title": title})
+		if title:
+			queryset = queryset.filter(title__icontains=title)
 
-	form = NewspaperSearchForm(request.GET)
+		return queryset.filter(publishers__id=redactor_id).order_by('-published_date')
 
-	if form.is_valid():
-		queryset = queryset.filter(
-			title__icontains=form.cleaned_data["title"]
-		)
-
-	paginator = Paginator(queryset, items_per_page)
-	page = request.GET.get('page')
-
-	try:
-		news = paginator.page(page)
-	except PageNotAnInteger:
-		news = paginator.page(1)
-	except EmptyPage:
-		news = paginator.page(paginator.num_pages)
-
-	context = {
-		'redactor_name': redactor_name,
-		'newspaper_list': news,
-		'page_obj': news,
-		'paginator': paginator,
-		"is_paginated": news.has_other_pages,
-		"search_form": search_form
-	}
-
-	return render(request, 'agency/redactor_news_list.html', context)
+	def get_context_data(self, *, object_list=None, **kwargs):
+		context = super().get_context_data(**kwargs)
+		redactor = Redactor.objects.get(id=self.kwargs["redactor_id"])
+		context["redactor_name"] = redactor.get_full_name()
+		context["search_form"] = NewspaperSearchForm(initial={"title": self.request.GET.get("title", "")})
+		return context
 
 
 def register_request(request):
