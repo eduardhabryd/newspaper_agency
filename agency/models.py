@@ -13,6 +13,9 @@ class Redactor(AbstractUser):
         verbose_name_plural = 'redactors'
         default_related_name = 'redactors'
 
+    def __str__(self):
+        return self.username
+
 
 class Topic(models.Model):
     name = models.CharField(max_length=255)
