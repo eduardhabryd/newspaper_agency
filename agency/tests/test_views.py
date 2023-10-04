@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from agency.models import Redactor, Topic, Newspaper
+from agency.models import Topic, Newspaper
 
 HOME_URL = reverse('agency:index')
 
