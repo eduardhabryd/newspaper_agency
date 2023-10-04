@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import SelectMultiple
-from django.contrib.auth.forms import PasswordChangeForm
 
 from agency.models import Newspaper, Redactor, Topic
 
@@ -143,7 +142,7 @@ class RedactorUpdateForm(forms.ModelForm):
                 'placeholder': 'Enter your old password',
             }
         ),
-        required=False  # This field is optional
+        required=False
     )
 
     new_password1 = forms.CharField(
@@ -154,7 +153,7 @@ class RedactorUpdateForm(forms.ModelForm):
                 'placeholder': 'Enter your new password',
             }
         ),
-        required=False  # This field is optional
+        required=False
     )
 
     new_password2 = forms.CharField(
@@ -165,7 +164,7 @@ class RedactorUpdateForm(forms.ModelForm):
                 'placeholder': 'Confirm your new password',
             }
         ),
-        required=False  # This field is optional
+        required=False
     )
 
     class Meta:
