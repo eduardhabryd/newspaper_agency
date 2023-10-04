@@ -20,10 +20,6 @@ from agency.forms import (
 from agency.models import Newspaper, Topic, Redactor
 
 
-def index(request):
-	return render(request, 'agency/index.html')
-
-
 class NewspaperListView(generic.ListView):
 	model = Newspaper
 	paginate_by = 4
@@ -104,40 +100,27 @@ class TopicListView(generic.ListView):
 		return self.queryset
 
 
-def topic_news_list(request, topic_name):
-	queryset = Newspaper.objects.filter(topic__name=topic_name).order_by('-published_date')
-	items_per_page = 4
+class TopicNewsListView(generic.ListView):
+	model = Newspaper
+	template_name = 'agency/topic_news_list.html'  # Replace with your template name
+	context_object_name = 'newspaper_list'
+	paginate_by = 4
 
-	title = request.GET.get("title", "")
-	search_form = NewspaperSearchForm(initial={"title": title})
+	def get_queryset(self):
+		topic_name = self.kwargs['topic_name']
+		queryset = super().get_queryset()
+		title = self.request.GET.get("title", "")
 
-	form = NewspaperSearchForm(request.GET)
+		if title:
+			queryset = queryset.filter(title__icontains=title)
 
-	if form.is_valid():
-		queryset = queryset.filter(
-			title__icontains=form.cleaned_data["title"]
-		)
+		return queryset.filter(topic__name=topic_name).order_by('-published_date')
 
-	paginator = Paginator(queryset, items_per_page)
-	page = request.GET.get('page')
-
-	try:
-		news = paginator.page(page)
-	except PageNotAnInteger:
-		news = paginator.page(1)
-	except EmptyPage:
-		news = paginator.page(paginator.num_pages)
-
-	context = {
-		'topic_name': topic_name,
-		'newspaper_list': news,
-		'page_obj': news,  # Pass the 'news' object as 'page_obj'
-		'paginator': paginator,  # Pass the 'paginator' object
-		"is_paginated": news.has_other_pages,
-		"search_form": search_form
-	}
-
-	return render(request, 'agency/topic_news_list.html', context)
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['topic_name'] = self.kwargs['topic_name']
+		context['search_form'] = NewspaperSearchForm(initial={"title": self.request.GET.get("title", "")})
+		return context
 
 
 class RedactorListView(generic.ListView):
