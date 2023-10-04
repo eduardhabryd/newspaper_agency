@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -46,7 +45,7 @@ class NewspaperDetailView(generic.DetailView):
 	model = Newspaper
 
 
-class NewspaperCreateView(LoginRequiredMixin, generic.CreateView):
+class NewspaperCreateUpdateMixin(LoginRequiredMixin):
 	model = Newspaper
 	success_url = reverse_lazy('agency:index')
 	form_class = NewspaperCreateForm
@@ -60,18 +59,12 @@ class NewspaperCreateView(LoginRequiredMixin, generic.CreateView):
 		return super().form_valid(form)
 
 
-class NewspaperUpdateView(LoginRequiredMixin, generic.UpdateView):
-	model = Newspaper
-	success_url = reverse_lazy('agency:index')
-	form_class = NewspaperCreateForm
+class NewspaperCreateView(NewspaperCreateUpdateMixin, generic.CreateView):
+	pass
 
-	def form_valid(self, form):
-		newspaper = form.save(commit=False)
-		if 'image' in self.request.FILES:
-			newspaper.image = self.request.FILES['image']
-		newspaper.save()
-		form.save_m2m()
-		return super().form_valid(form)
+
+class NewspaperUpdateView(NewspaperCreateUpdateMixin, generic.UpdateView):
+	pass
 
 
 class NewspaperDeleteView(LoginRequiredMixin, generic.DeleteView):
@@ -174,7 +167,6 @@ class RedactorUpdateView(generic.UpdateView):
 	form_class = RedactorUpdateForm
 
 	def get_form(self, form_class=None):
-		# Pass the request user to the form
 		form = super().get_form(form_class)
 		form.user = self.request.user
 		return form
@@ -190,7 +182,6 @@ class RedactorUpdateView(generic.UpdateView):
 		password_form = PasswordChangeForm(self.request.user, self.request.POST)
 		if password_form.is_valid():
 			password_form.save()
-			# Update the session to prevent logout after password change
 			update_session_auth_hash(self.request, password_form.user)
 
 		return super().form_valid(form)
