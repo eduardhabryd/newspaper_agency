@@ -14,11 +14,24 @@ password: NeRQREDu6Bvs5Z
 
 ## Installation
 
+For Windows:
+```shell
+git clone https://github.com/eduardhabryd/newspaper_agency.git
+cd newspaper_agency
+python venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py loaddata test_data.json
+python manage.py runserver
+```
+For Mac (and Linux):
 ```shell
 git clone https://github.com/eduardhabryd/newspaper_agency.git
 cd newspaper_agency
 python3 -m venv venv
-source venv\Scripts\activate
+source venv/bin/activate
 pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
@@ -39,4 +52,4 @@ python manage.py runserver
 
 ## Demo
 
-![Website interface](demo.png)
+![Website interface](media/demo.png)
