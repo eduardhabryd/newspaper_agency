@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <h1>Latest articles of <span class="text-muted">{{ topic_name }}</span></h1>
+    {% include "includes/newspaper_cards.html" %}
+{% endblock %}

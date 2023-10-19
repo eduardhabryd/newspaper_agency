@@ -1,0 +1,72 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand ms-4 me-5"
+       href="{% url 'agency:index' %}">
+      <img src="{% static 'images/favicon.svg' %}"
+           alt=""
+           width="30px"
+           height="30px"
+      >
+      The Newsletter Nexus
+    </a>
+    <div class="collapse navbar-collapse"
+         id="navbarScroll">
+      <ul class="navbar-nav me-auto mx-auto my-2 my-lg-0 navbar-nav-scroll"
+          style="--bs-scroll-height: 100px;">
+        <li class="nav-item ms-5">
+          <a class="nav-link active"
+             aria-current="page"
+             href="{% url 'agency:index' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active"
+             aria-current="page"
+             href="{% url 'agency:topic-list' %}">Topics</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active"
+             aria-current="page"
+             href="{% url 'agency:redactor-list' %}">Redactors</a>
+        </li>
+      </ul>
+      {% if not search_form %}
+        <div class="w-25"></div>
+      {% endif %}
+      <ul class="navbar-nav me-2">
+        {% if not user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link"
+               href="{% url 'agency:login' %}">Login</a>
+          </li>
+        {% else %}
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"
+             href="#"
+             role="button"
+             data-bs-toggle="dropdown"
+             aria-expanded="false">
+            {{ user.username }}
+          </a>
+          <ul class="dropdown-menu">
+          <li><a class="dropdown-item"
+                 href="{% url 'agency:redactor-update' user.id %}">Profile</a></li>
+          <li class="dropdown-divider"></li>
+          <li><a class="dropdown-item"
+                 href="{% url 'agency:logout' %}">Logout</a></li>
+        {% endif %}
+        </ul>
+        </li>
+      </ul>
+      <form class="d-flex"
+            role="search">
+        {% if search_form %}
+          {{ search_form }}
+          <button class="btn btn-outline-dark me-3"
+                  type="submit">Search
+          </button>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+</nav>
